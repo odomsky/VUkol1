@@ -6,25 +6,17 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 
+
 namespace UkolOdVitka1
 {
     class Program
     {
         static void Main(string[] args)
         {
-            while (true)
-            {
+          
                 WaitRandomTimeThenExecute();
                 PickNumberAndWriteToFile();
-            }
            
-           
-
-
-
-
-
-            Console.ReadKey();
         }
 
         public static string GetFilePath()
@@ -34,7 +26,7 @@ namespace UkolOdVitka1
             filePathTxt = filePathTxt.Remove(0, 6);
             return filePathTxt;
         }
-        public static string GetNumberbetveen0to5()
+        public static string GetNumberBetween0To5()
         {
             string _number = "";
             while (_number != "0"&& _number != "1" && _number != "2" && _number != "3" && _number != "4" && _number != "5") 
@@ -47,8 +39,6 @@ namespace UkolOdVitka1
 
         public static void PickNumberAndWriteToFile()
         {
-           
-
             if (!File.Exists(GetFilePath()))
             {
                 File.WriteAllText(GetFilePath(), "");
@@ -57,24 +47,20 @@ namespace UkolOdVitka1
             string SNumberToSave = "";
             while (SNumberToSave != "0")
             {
-                SNumberToSave = GetNumberbetveen0to5();
+                SNumberToSave = GetNumberBetween0To5();
                 if (SNumberToSave == "1" || SNumberToSave == "2" || SNumberToSave == "3" || SNumberToSave == "4" || SNumberToSave == "5")
                 {
                     File.AppendAllText(GetFilePath(), SNumberToSave + Environment.NewLine);
                     Console.WriteLine("cislo pridano");
                 }
             }
+            
         }
         public static string ReadFirsLine()
         {
             string lastNumberOfFile = File.ReadAllLines(GetFilePath()).First();
             return lastNumberOfFile;
-            
-            // DataToSave data = new DataToSave(lastNumberOfFile);
-           // Console.WriteLine(data.ToString());
         }
-
-
 
        public static void DeleteFirstLine()
         {
@@ -84,29 +70,32 @@ namespace UkolOdVitka1
 
         public static void ExecuteReading()
         {
-            try
-            {
-                string sfirstLine = ReadFirsLine();
-                DataToSave data = new DataToSave(sfirstLine);
-                Console.WriteLine(data.ToString());
-                DeleteFirstLine();
-            }
-            catch (Exception)
-            {
+           
+                try
+                {
+                    string sfirstLine = ReadFirsLine();
+                    DataToSave data = new DataToSave(sfirstLine);
+                    Console.WriteLine(data.ToString());
+                    DeleteFirstLine();
+                }
+                catch (Exception)
+                {
 
-                Console.WriteLine("Zasobnik je prazdny");
-            }
-            
+                    Console.WriteLine("Zasobnik je prazdny");
+                } 
         }
 
-        public static Task WaitRandomTimeThenExecute()
+        public static async void WaitRandomTimeThenExecute()
         {
-            int randomNumber = 1000 * GenerateRandomNumber(1, 10);
-            return Task.Run(() =>
+            while (true)
             {
+            await Task.Run(() =>
+            {
+                int randomNumber = GenerateRandomNumber(1000, 10000);
                 Thread.Sleep(randomNumber);
                 ExecuteReading();
             });
+            }
         }
         public static int GenerateRandomNumber(int min, int max)
         {
