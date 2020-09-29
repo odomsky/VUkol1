@@ -39,7 +39,7 @@ namespace UkolOdVitka1
             string _number = "";
             while (_number != "0"&& _number != "1" && _number != "2" && _number != "3" && _number != "4" && _number != "5") 
             {
-                Console.WriteLine("zadejte 1-5 pro zadani hodnoty\n0 pro ukončení programu");
+                Console.WriteLine("zadejte 1-5 pro zadani hodnoty\n0 pro ukončení programu!!!");
                 _number = Console.ReadLine();
             }
             return _number; 
